@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Información del Restaurante</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #E67E22; /* Orange */
+            --secondary-color: #2C3E50; /* Dark Blue */
+            --background-color: #ECF0F1; /* Light Gray */
+            --text-color: #34495E; /* Dark Gray */
+            --white-color: #FFFFFF;
+            --light-gray-color: #BDC3C7;
+            --success-color: #2ECC71; /* Green */
+            --error-color: #E74C3C; /* Red */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2 {
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            display: inline-block; /* Keep border only under text */
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: var(--white-color);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Reset text align for sections */
+        }
+
+        .section h2 {
+             text-align: left; /* Align section headers left */
+             width: 100%; /* Make header take full width for border */
+        }
+
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-size: 1.05em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: calc(100% - 20px); /* Adjust width accounting for padding */
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--light-gray-color);
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(230, 126, 34, 0.5);
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 80px;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            background-color: var(--white-color);
+        }
+
+        tr:nth-child(even) td {
+             background-color: #f8f9fa; /* Slightly different background for even rows */
+        }
+
+        td input[type="number"] {
+            width: 80%; /* Adjust input width within table cells */
+            padding: 8px;
+            margin: 0 auto; /* Center input */
+            display: block;
+        }
+
+
+        .note {
+            font-style: italic;
+            color: #7f8c8d; /* Slightly muted gray */
+            font-size: 0.9em;
+            margin-top: -10px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: block;
+            margin: 20px auto 0; /* Center button */
+        }
+
+        button:hover {
+            background-color: #d35400; /* Darker orange on hover */
+            transform: translateY(-2px);
+        }
+
+        button:active {
+             transform: translateY(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .section {
+                padding: 15px;
+            }
+             table, thead, tbody, th, td, tr {
+                display: block;
+            }
+             thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+             tr { border: 1px solid #ccc; margin-bottom: 10px;}
+             td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+             td:before {
+                position: absolute;
+                top: 12px;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                content: attr(data-label);
+                font-weight: bold;
+                text-align: left;
+            }
+            td input[type="number"] {
+                width: 60%;
+                float: right;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Información del Restaurante</h1>
+    <p>Por favor, complete la siguiente información para que nuestro agente de IA pueda gestionar las reservas de manera eficiente. Una vez completado, puede descargar el formulario como PDF y mandarnoslo.</p>
+
+    <form id="restaurantForm">
+        <!-- Sección de Mesas -->
+        <div class="section">
+            <h2>1. Mesas</h2>
+            <p>Indique la cantidad de mesas disponibles para diferentes números de personas, especificando cuántas están en el interior y cuántas en la terraza.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tamaño de Mesa</th>
+                        <th>Interior</th>
+                        <th>Terraza</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2 personas</td>
+                        <td data-label="Interior"><input type="number" name="mesas_2_interior" min="0" required></td>
+                        <td data-label="Terraza"><input type="number" name="mesas_2_terraza" min="0" required></td>
+                    </tr>
+                    <tr>
+                        <td>4 personas</td>
+                        <td data-label="Interior"><input type="number" name="mesas_4_interior" min="0" required></td>
+                        <td data-label="Terraza"><input type="number" name="mesas_4_terraza" min="0" required></td>
+                    </tr>
+                    <tr>
+                        <td>6 personas</td>
+                        <td data-label="Interior"><input type="number" name="mesas_6_interior" min="0" required></td>
+                        <td data-label="Terraza"><input type="number" name="mesas_6_terraza" min="0" required></td>
+                    </tr>
+                    <tr>
+                        <td>8 personas</td>
+                        <td data-label="Interior"><input type="number" name="mesas_8_interior" min="0" required></td>
+                        <td data-label="Terraza"><input type="number" name="mesas_8_terraza" min="0" required></td>
+                    </tr>
+                </tbody>
+            </table>
+            <label for="mesas_grandes">¿Tiene mesas para más de 8 personas? Si es así, especifique cuántas y para cuántas personas:</label>
+            <textarea name="mesas_grandes" id="mesas_grandes" rows="3"></textarea>
+        </div>
+
+        <!-- Sección de Gestión de Mesas -->
+        <div class="section">
+            <h2>2. Gestión de Mesas</h2>
+            <label for="accion_mesa_6">Si todas las mesas de 6 personas están ocupadas, ¿qué suelen hacer? (por ejemplo, juntar mesas de 4 y 2):</label>
+            <input type="text" name="accion_mesa_6" id="accion_mesa_6" required>
+
+            <label for="limite_personas">¿Cuál es el límite máximo de personas para hacer una reserva por telefono?</label>
+            <input type="text" name="limite_personas" id="limite_personas" min="1" required>
+
+            <label for="accion_reservas_grandes">¿Qué deben hacer los clientes si desean hacer una reserva para un grupo grande que supere el límite? (por ejemplo, se podría redirigir la llamada al restaurante):</label>
+            <input type="text" name="accion_reservas_grandes" id="accion_reservas_grandes" required>
+        </div>
+
+        <!-- Sección de Preferencias de Ubicación -->
+        <div class="section">
+            <h2>3. Preferencias de Ubicación</h2>
+            <label for="preferencia_por_defecto">Si un cliente no especifica si quiere una mesa en la terraza o en el interior, ¿cuál es el comportamiento por defecto?</label>
+            <select name="preferencia_por_defecto" id="preferencia_por_defecto" required>
+                <option value="">Seleccione una opción</option>
+                <option value="interior">Asignar mesa en el interior</option>
+                <option value="terraza">Asignar mesa en la terraza</option>
+                <option value="aleatorio">Asignar aleatoriamente</option>
+            </select>
+        </div>
+
+        <!-- Sección de Información General -->
+        <div class="section">
+            <h2>4. Información General del Restaurante</h2>
+            <p>Proporcione información detallada sobre su restaurante. Esto ayudará al agente de IA a responder preguntas comunes de los clientes. <span class="note">Nota: Cualquier información no proporcionada podría no ser respondida por el bot si es muy específica.</span></p>
+            <label for="especialidad">Especialidad del restaurante:</label>
+            <input type="text" name="especialidad" id="especialidad">
+
+            <label for="horarios">Horarios de apertura:</label>
+            <textarea name="horarios" id="horarios" rows="3"></textarea>
+
+            <label for="alergenos">Información sobre alérgenos:</label>
+            <textarea name="alergenos" id="alergenos" rows="3"></textarea>
+
+            <label for="vegano">Opciones veganas:</label>
+            <textarea name="vegano" id="vegano" rows="3"></textarea>
+
+            <label for="menus_dia">Menús del día:</label>
+            <textarea name="menus_dia" id="menus_dia" rows="3"></textarea>
+
+            <label for="accesibilidad">Información sobre accesibilidad (por ejemplo, acceso para sillas de ruedas):</label>
+            <textarea name="accesibilidad" id="accesibilidad" rows="3"></textarea>
+
+
+            <label for="eventos_especiales">Información sobre eventos especiales o privatizaciones:</label>
+            <textarea name="eventos_especiales" id="eventos_especiales" rows="3"></textarea>
+
+            <label for="estacionamiento">Detalles sobre estacionamiento o transporte público cercano:</label>
+            <textarea name="estacionamiento" id="estacionamiento" rows="3"></textarea>
+
+            <label for="informacion_adicional">Información adicional que considere relevante:</label>
+            <textarea name="informacion_adicional" id="informacion_adicional" rows="3"></textarea>
+        </div>
+
+        <!-- Sección de Horarios -->
+        <div class="section">
+            <h2>5. Horarios</h2>
+            <label for="horario_restaurante">Horario del restaurante (días y horas de apertura):</label>
+            <textarea name="horario_restaurante" id="horario_restaurante" rows="3" required></textarea>
+
+            <label for="cierre_cocina">Hora de cierre de la cocina:</label>
+            <textarea name="cierre_cocina" id="cierre_cocina" rows="1" required></textarea>
+
+
+            <label for="ultima_reserva">Última hora en la que se puede hacer una reserva:</label>
+            <textarea name="ultima_reserva" id="ultima_reserva" rows="1" required></textarea>
+
+            <label for="duracion_reserva">Duración promedio de una reserva:</label>
+            <textarea name="duracion_reserva" id="duracion_reserva" rows="1" required></textarea>
+            
+        </div>
+
+        <div class="section">
+            <h2>6. Información adicional</h2>
+            <label for="informacion_adicional">Información adicional que considere relevante:</label>
+            <textarea name="informacion_adicional" id="informacion_adicional" rows="3"></textarea>
+        </div>
+
+        <button type="button" onclick="generatePDF()">Descargar como PDF</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script>
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            const form = document.getElementById("restaurantForm");
+            const sections = form.querySelectorAll('.section');
+            const title = document.querySelector('h1').innerText;
+            let yPos = 20;
+            const pageHeight = doc.internal.pageSize.height;
+            const margin = 15;
+            const cellPadding = 3;
+            const lineHeight = 7; // Approx height for a line of text in mm
+            const sectionSpacing = 10;
+            const fieldSpacing = 5;
+
+            doc.setFontSize(18);
+            doc.setFont(undefined, 'bold');
+            doc.text(title, doc.internal.pageSize.width / 2, yPos, { align: 'center' });
+            yPos += sectionSpacing * 1.5;
+
+            function checkAddPage(requiredHeight) {
+                if (yPos + requiredHeight > pageHeight - margin) {
+                    doc.addPage();
+                    yPos = margin;
+                }
+            }
+
+            sections.forEach((section, index) => {
+                const sectionTitle = section.querySelector('h2').innerText;
+                const inputs = section.querySelectorAll('input, select, textarea');
+                const table = section.querySelector('table');
+
+                checkAddPage(lineHeight * 2 + sectionSpacing); // Space for title and spacing
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text(sectionTitle, margin, yPos);
+                yPos += lineHeight + fieldSpacing;
+
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+
+                if (table) {
+                    const headers = ['Tamaño de Mesa', 'Interior', 'Terraza'];
+                    const body = [];
+                    const rows = table.querySelectorAll('tbody tr');
+
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        const rowData = [
+                            cells[0].innerText,
+                            cells[1].querySelector('input').value || '0',
+                            cells[2].querySelector('input').value || '0'
+                        ];
+                        body.push(rowData);
+                    });
+
+                    // Estimate table height
+                    const tableHeight = (body.length + 1) * (lineHeight + cellPadding * 2); // Rows + header
+                    checkAddPage(tableHeight + fieldSpacing);
+
+                    doc.autoTable({
+                        head: [headers],
+                        body: body,
+                        startY: yPos,
+                        theme: 'grid',
+                        headStyles: { fillColor: [44, 62, 80] }, // Dark Blue
+                        styles: { cellPadding: cellPadding, fontSize: 9, halign: 'center' },
+                        columnStyles: { 0: { halign: 'left' } },
+                        margin: { left: margin, right: margin }
+                    });
+                    yPos = doc.autoTable.previous.finalY + fieldSpacing;
+
+                    // Handle the text area after the table
+                    const largeTablesTextarea = section.querySelector('textarea[name="mesas_grandes"]');
+                    if (largeTablesTextarea && largeTablesTextarea.value) {
+                         const labelElement = section.querySelector('label[for="mesas_grandes"]');
+                         const labelText = labelElement ? labelElement.innerText.replace(':','') : 'Mesas Grandes';
+                         const value = largeTablesTextarea.value;
+
+                         const splitLabel = doc.splitTextToSize(labelText, doc.internal.pageSize.width - margin * 2);
+                         const splitValue = doc.splitTextToSize(value, doc.internal.pageSize.width - margin * 2);
+                         const requiredHeight = (splitLabel.length + splitValue.length) * lineHeight + fieldSpacing;
+                         checkAddPage(requiredHeight);
+
+                         doc.setFont(undefined, 'bold');
+                         doc.text(splitLabel, margin, yPos);
+                         yPos += splitLabel.length * lineHeight; // Move yPos down by label height
+
+                         doc.setFont(undefined, 'normal');
+                         doc.text(splitValue, margin, yPos);
+                         yPos += splitValue.length * lineHeight + fieldSpacing; // Move yPos down by value height + spacing
+                    }
+                } else {
+                    // Handle sections without tables (standard label/value pairs)
+                    inputs.forEach(input => {
+                        // Ensure we don't process inputs already handled (like those in the table section's textarea)
+                        if (!input.closest('table') && input.name !== 'mesas_grandes') {
+                            const labelElement = form.querySelector(`label[for="${input.id || input.name}"]`);
+                            // Fallback to a cleaner name if label is missing
+                            const labelText = labelElement ? labelElement.innerText.replace(':', '') : input.name.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()); // Capitalize words
+                            let value = input.value;
+
+                            if (input.tagName === 'SELECT' && input.selectedOptions.length > 0) {
+                                value = input.selectedOptions[0].text;
+                            }
+
+                            // Only process fields that have a value
+                            if (value && value.trim() !== '') {
+                                // Split label and value separately for height calculation and rendering
+                                const splitLabel = doc.splitTextToSize(labelText, doc.internal.pageSize.width - margin * 2);
+                                const splitValue = doc.splitTextToSize(value, doc.internal.pageSize.width - margin * 2);
+
+                                // Calculate required height: lines(label) + lines(value) + spacing
+                                const requiredHeight = (splitLabel.length + splitValue.length) * lineHeight + fieldSpacing;
+                                checkAddPage(requiredHeight);
+
+                                // Print Label (bold)
+                                doc.setFont(undefined, 'bold');
+                                doc.text(splitLabel, margin, yPos);
+                                yPos += splitLabel.length * lineHeight; // Move yPos down by label height
+
+                                // Print Value (normal)
+                                doc.setFont(undefined, 'normal');
+                                doc.text(splitValue, margin, yPos);
+                                yPos += splitValue.length * lineHeight + fieldSpacing; // Move yPos down by value height + spacing
+                            }
+                        }
+                    });
+                }
+                // Add space before the next section title, unless it's the last section
+                 if (index < sections.length - 1) {
+                   yPos += sectionSpacing;
+                 }
+            });
+
+            doc.save("formulario_restaurante_detallado.pdf");
+        }
+    </script>
+</body>
+</html>
